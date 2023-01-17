@@ -17,7 +17,7 @@ app.use(session({
     resave: true,
     saveUninitialized: true
 }))
-//data
+//data of user
 const userdata = {
     email: 'rananikki011@gmail.com',
     password: "nik123"
@@ -27,7 +27,7 @@ app.get("/", (req, res) => {
     res.sendFile(mainFile + '/index.html')
 })
 
-//ye dikheag humko form submit route prr aur user ki details save ho lengi session storage mai 
+
 app.post("/form_submit", (req, res) => {
     if (req.body.email == userdata.email && req.body.password == userdata.password) {
         req.session.usermail = req.body.email;
@@ -35,6 +35,13 @@ app.post("/form_submit", (req, res) => {
     } else {
         res.send("Invalid user id and password");
     }
+})
+//It will destroy session 
+app.get("/logoutpage", (req, res) => {
+    req.session.destroy((err) => {
+        console.log("destroyed")
+    })
+    res.send("successfully logout");
 })
 
 app.listen(PORT, (error) => {
